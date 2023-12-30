@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script>
+      $(function () {
+        $("#header").load("header.html");
+      });
+    </script> -->
+    <style>
+      body {
+        background-color: rgb(238, 242, 245);
+      }
+      #main {
+        display: flex;
+        flex-direction: row;
+      }
+      .left {
+        width: 60%;
+      }
+      .left *:not(img):not(i) {
+        margin: 15px;
+      }
+      .left * {
+        border-radius: 5px;
+      }
+      .right {
+        width: 35%;
+      }
+      .right * {
+        padding: 5px;
+      }
+      .img1 {
+        display: block;
+        width: 100%;
+      }
+      .note {
+        border: 1px solid rgb(222, 222, 222);
+        background-color: rgb(247, 245, 243);
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+      }
+      .note p {
+        width: 70%;
+        text-align: left;
+      }
+      .note .p2 {
+        width: fit-content;
+        height: fit-content;
+        color: rgb(231, 178, 21);
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .items {
+        display: flex;
+        background-color: rgb(255, 255, 255);
+      }
+      .items .itemImg {
+        width: 15%;
+        height: 100%;
+        cursor: pointer;
+      }
+      .items .details .brand {
+        color: gray;
+      }
+      .cannot {
+        width: fit-content;
+        float: left;
+        margin-left: 15px;
+      }
+      .shopping {
+        color: blue;
+        border: 1px solid blue;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 15px;
+        background-color: white;
+      }
+      .numItems {
+        padding: 51px;
+      }
+      .rightSide {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .orderSummary {
+        border: 1px solid lightgray;
+      }
+      #myNav {
+        background-color: #feee00 !important;
+      }
+      #logoNoon {
+        height: 24px;
+        width: 100px;
+      }
+      .form-control {
+        height: 36px;
+      }
+      .flag {
+        width: 29px;
+        height: 29px;
+      }
+      .myItems:not(.dropdown-menu):hover {
+        opacity: 0.4;
+      }
+    </style>
+    <script src="./helpers.js"></script>
+    <script defer src="./login.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav id="myNav" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./index.html"
+            ><svg
+              id="logoNoon"
+              width="173"
+              height="48"
+              viewBox="0 0 173 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M161.706 9.67833C158.639 9.67833 155.855 10.676 153.72 12.5128L153.105 10.3357H147.692V37.7063H154.573V22.8345C154.573 19.669 156.695 16.4615 160.746 16.4615C163.916 16.4615 165.804 18.6946 165.804 22.4289V37.711H172.685V21.9254C172.685 14.4849 168.378 9.67833 161.706 9.67833ZM106.709 24C106.709 28.3683 103.86 31.5385 99.9301 31.5385C96 31.5385 93.1515 28.3683 93.1515 24C93.1515 19.6317 96 16.4615 99.9301 16.4615C103.855 16.4615 106.709 19.6317 106.709 24ZM99.9254 9.67833C92.2098 9.67833 86.1632 15.9674 86.1632 23.9953C86.1632 32.0233 92.2051 38.317 99.9254 38.317C107.641 38.317 113.688 32.028 113.688 23.9953C113.688 15.9674 107.646 9.67833 99.9254 9.67833ZM136.779 24C136.779 28.3683 133.925 31.5385 130 31.5385C126.075 31.5385 123.221 28.3683 123.221 24C123.221 19.6317 126.075 16.4615 130 16.4615C133.93 16.4615 136.779 19.6317 136.779 24ZM130 9.67833C122.284 9.67833 116.238 15.9674 116.238 23.9953C116.238 32.0233 122.28 38.317 130 38.317C137.716 38.317 143.762 32.028 143.762 23.9953C143.762 15.9674 137.72 9.67833 130 9.67833ZM71.2587 9.67833C68.1958 9.67833 65.4079 10.676 63.2681 12.5128L62.6527 10.3357H57.2448V37.7063H64.1259V22.8345C64.1259 19.669 66.2471 16.4615 70.2984 16.4615C73.4685 16.4615 75.3566 18.6946 75.3566 22.4289V37.711H82.2377V21.9254C82.2377 14.4849 77.9301 9.67833 71.2587 9.67833Z"
+                fill="#404553"
+              />
+              <path
+                d="M0 25.1375C0 38.0047 10.9371 48 23.6503 48C36.9604 48 47.7482 37.2634 47.7482 24.1492C47.7482 16.4802 44.0373 9.74825 38.5455 5.24942L34.5361 12.1772C37.8508 14.9977 40.1259 19.352 40.1259 24.2517C40.1259 33.1562 32.7552 40.4802 23.6503 40.4802C14.5967 40.4802 7.22144 33.1562 7.22144 24.0047C7.22144 22.9138 7.31935 21.8275 7.51981 20.7879L0 25.1375ZM31.0723 1.18881C28.7972 0.344988 26.7692 0 24.7413 0C23.2075 0 21.8695 0.195804 20.8811 0.39627L15.7343 9.3007C17.6131 8.21445 20.0373 7.61772 22.662 7.61772C24.1958 7.61772 25.5804 7.81352 27.0163 8.20979L31.0723 1.18881Z"
+                fill="#404553"
+              />
+            </svg>
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown myItems">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="flag flag-egypt"></i>
+                  <img class="flag" src="./egypt.png" alt="flag" />
+                  Deliver to
+                  <b>Cairo</b>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
+              </li>
+            </ul>
+          </div>
+          <form class="d-flex signIn" style="width: 60%">
+            <input
+              class="form-control me-2 inpt-search"
+              type="search"
+              placeholder="What are you looking for?"
+              aria-label="Search"
+            />
+            <div id="dropdown" class="dropdown-content"></div>
+          </form>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item myItems">
+                <a class="nav-link fw-bold open" aria-current="page" href="#"
+                  >Sign In <i class="fa-solid fa-user"></i
+                ></a>
+              </li>
+              <li class="nav-item myItems">
+                <a class="nav-link fw-bold" href="cart.html"
+                  >Cart
+
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                  <i class="badge badge-success" id="cartIcon"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Start Forms -->
+
+    <div class="wrapper">
+      <span class="icon-close">
+        <i class="fa-solid fa-xmark"></i>
+      </span>
+      <div class="form-box login">
+        <h4>Welcome back!</h4>
+        <h3>Sign in to your account</h3>
+        <div class="login-register">
+          <p>
+            Don't have an account?<a href="#" class="register-link"> Sign Up</a>
+          </p>
+        </div>
+        <form action="#" class="login-form">
+          <div class="input-box">
+            <input id="user" type="text" />
+            <label for="user">Name</label>
+            <div class="error"></div>
+          </div>
+
+          <div class="input-box">
+            <input id="password" class="password" type="password" />
+            <label for="password">Password</label>
+            <div class="error"></div>
+          </div>
+          <div class="remember-forget">
+            <a href="#">Forget your password?</a>
+          </div>
+          <button type="submit" class="btn1">SIGN IN</button>
+        </form>
+        <div id="errorContainer" style="color: red; text-align: center"></div>
+        <div
+          id="successLogin"
+          style="display: none; color: green; text-align: center"
+        ></div>
+      </div>
+
+      <div class="form-box register">
+        <h3>Create an account</h3>
+        <div class="login-register">
+          <p>
+            Already have an account?<a href="#" class="login-link"> Sign In</a>
+          </p>
+        </div>
+        <form action="#" class="register-form">
+          <div class="input-box">
+            <input id="email1" class="email" type="email" />
+            <label for="email1">Email</label>
+            <div class="error-email"></div>
+          </div>
+          <div class="input-box">
+            <input id="password1" class="password" type="password" />
+            <label for="password1">Password</label>
+            <div class="error-password"></div>
+          </div>
+          <div class="input-box">
+            <input id="name1" class="name" type="text" />
+            <label for="name1">Name</label>
+            <div class="error-name"></div>
+          </div>
+          <button type="submit" class="btn1">CREATE AN ACCOUNT</button>
+        </form>
+        <div
+          id="errorContainer"
+          style="display: none; text-align: center"
+        ></div>
+        <div
+          id="successContainer"
+          style="display: none; text-align: center"
+        ></div>
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+
+    <section id="main">
+      <section class="left">
+        <div id="numOfItems"></div>
+        <div>
+          <img
+            class="img1"
+            src="https://f.nooncdn.com/mpcms/EN0003/assets/b5269e16-510b-4ae5-b93b-79a6b4193d30.png"
+            alt=""
+          />
+        </div>
+        <div class="note">
+          <p>
+            Please note that some items in your cart are considered large or
+            bulky and will require an additional shipping fee Please review your
+            cart before proceeding
+          </p>
+          <p class="p2 pt-2">Dismiss</p>
+        </div>
+        <div id="itemsDiv" class="m-0 p-0"></div>
+        <button class="shopping">
+          <a class="p-0 m-0 text-decoration-none" href="./index.html">
+            <h6>Continue Shopping</h6></a
+          >
+        </button>
+      </section>
+      <section class="right mt-4" style="padding: 45px">
+        <div id="divOrderSummary"></div>
+        <div
+          style="background-color: rgb(245, 246, 228)"
+          class="d-flex justify-content-start mt-1 p-1"
+        >
+          <svg
+            class="mt-2"
+            width="65"
+            height="40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M16.364 16.8a9 9 0 1 0-12.878-.154l6.504 7.917 6.374-7.762Z"
+              fill="#FEEE00"
+            ></path>
+            <path
+              d="m16.364 16.8-.316-.315-.015.016-.014.017.345.283Zm-12.878-.153.345-.283-.01-.013-.012-.012-.323.308Zm6.504 7.916-.345.284.345.42.345-.42-.345-.284Zm6.69-7.447a9.418 9.418 0 0 0 2.766-6.68h-.892c0 2.363-.957 4.501-2.506 6.05l.631.63Zm2.766-6.68A9.446 9.446 0 0 0 10 .992v.892a8.554 8.554 0 0 1 8.554 8.554h.892ZM10 .992a9.446 9.446 0 0 0-9.446 9.446h.892A8.554 8.554 0 0 1 10 1.883V.991ZM.554 10.437c0 2.527.993 4.823 2.609 6.518l.646-.616a8.523 8.523 0 0 1-2.363-5.902H.554Zm9.78 13.843-6.503-7.916-.69.566 6.504 7.916.69-.566Zm5.685-7.762L9.645 24.28l.69.566 6.374-7.762-.69-.566Z"
+              fill="#404553"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M10 13.484a3.375 3.375 0 1 0 0-6.75 3.375 3.375 0 0 0 0 6.75Z"
+              fill="#fff"
+              stroke="#404553"
+              stroke-width=".892"
+            ></path>
+          </svg>
+          <p class="p-0">
+            Select a Collection Point address as the delivery address on
+            Checkout to avoid the shipping fee
+          </p>
+        </div>
+        <div
+          style="
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(9, 124, 124);
+          "
+          class="d-flex justify-content-start mt-1 rounded pt-3 px-3"
+        >
+          <img
+            src="https://k.nooncdn.com/s/app/com/noon/images/valu-logo-v4.svg"
+            width="46px"
+            height="36px"
+          />
+          <p style="padding: 0% !important">
+            Pay EGP 1254.67 monthly over 3 months with 0% interest and 0%
+            purchase fees
+          </p>
+        </div>
+      </section>
+    </section>
+    <div id="cartDiv"></div>
+
+    <script src="cart.js"></script>
+  </body>
+</html>
